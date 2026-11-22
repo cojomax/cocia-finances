@@ -1,0 +1,50 @@
+# Secrets (local secrets live in dotnet user-secrets, outside the repo)
+.env
+.env.*
+!.env.example
+*.pfx
+*.pem
+
+# Claude Code (personal settings)
+.claude/settings.local.json
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vs/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+TestResults/
+*.trx
+coverage*.xml
+
+# Node / React
+node_modules/
+dist/
+coverage/
+*.log
+playwright-report/
+test-results/
+
+# Terraform (commit .terraform.lock.hcl; never commit state or real tfvars)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+*.tfvars
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

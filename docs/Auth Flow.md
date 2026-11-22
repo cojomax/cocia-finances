@@ -31,8 +31,8 @@ Example response:
 {
     "redirect_uri": "https://developer.prod.finverse.net/sink",
     "success": {
-        "code": "03M75JR8QJ8BGJE3JGY03TFJ3T",
-        "login_identity_id": "01M75JM18G1ZZ3HTYGH7N7SE3F",
+        "code": "{link_code}",
+        "login_identity_id": "{login_identity_id}",
         "state": "{{customer_app_id}}_stateparameter"
     }
 }
@@ -50,7 +50,7 @@ Example response:
     "access_token": "{login_identity_token}",
     "expires_in": 3600,
     "issued_at": "2026-11-11T15:46:33.000Z",
-    "login_identity_id": "01M75LKDKTR0H56338582F8HMG",
+    "login_identity_id": "{login_identity_id}",
     "refresh_token": "{login_identity_refresh_token}",
     "token_type": "Bearer"
 }

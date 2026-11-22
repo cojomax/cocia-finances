@@ -37,5 +37,5 @@ TBC. Once projects exist, list install / dev / lint / typecheck / test commands 
 - Money: never use floating point. Amounts stay in their original currency; USD is the reporting currency (ADR-0003). Store integer minor units (cents) plus an ISO 4217 currency code, or use a decimal library.
 - Dates: store UTC; convert to local time (Africa/Johannesburg default) only for display.
 - Real financial data never goes into fixtures, tests, logs, screenshots or commits. Use synthetic data.
-- Secrets live in env files that are git-ignored; never hard-code keys.
+- Secrets: `dotnet user-secrets` locally, Azure Key Vault in production (managed identity). Never hard-code keys or commit env files.
 - Small, focused PRs; one feature or fix each.

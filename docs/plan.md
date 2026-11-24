@@ -13,7 +13,7 @@ Get one request flowing through every layer (React → BFF → API → Postgres)
 ## Architecture (target)
 | Service | Tech | Role |
 |---|---|---|
-| `apps/web` | React + Vite + TypeScript | UI. TanStack Query for server state; Zustand/context for client state. |
+| `apps/web` | React + Vite + TypeScript | UI. shadcn/ui + Tailwind, TanStack Table, Recharts (ADR-0008). TanStack Query for server state; Zustand/context for client state. |
 | `apps/bff` | ASP.NET Core (.NET 10) | Backend-for-Frontend: serves the React build, owns the cookie session, proxies to the API (YARP), hosts SignalR hub. See ADR-0002. |
 | `apps/api` | ASP.NET Core (.NET 10) | Domain API. EF Core + PostgreSQL. Publishes an OpenAPI spec. |
 | `apps/worker` | .NET Worker Service | Finverse syncs + token refresh, FX rate polling, scheduled jobs. |
@@ -41,10 +41,11 @@ Everything else is v2+.
 
 ### Phase 0: Foundations
 - [x] Update `CLAUDE.md` for the new stack and draft ADRs 0001–0004 (status: proposed; review and accept).
-- [ ] `git init`, push to GitHub, protect `main` (PRs only, checks required).
+- [x] `git init`, push to GitHub (public), squash-only merge settings.
+- [ ] Light protection on `main`: block deletion and force pushes; direct commits allowed for now.
 - [ ] Turn on Dependabot, CodeQL, secret scanning.
 - [ ] Monorepo layout: `apps/web`, `apps/bff`, `apps/api`, `apps/worker`, `libs/`, `infra/`, `docs/`. A `CLAUDE.md` per app.
-- [ ] Extend `.claude/hooks/check.sh` to handle `.csproj` (`dotnet build`, `dotnet format --verify-no-changes`).
+- [x] Extend `.claude/hooks/check.sh` for .NET (`dotnet build`, `dotnet format`) and Terraform (`fmt`, `validate`).
 - [x] Hosting (ADR-0005: Azure), IaC (ADR-0006: Terraform), FX sources (ADR-0007) drafted.
 - [x] Secrets: `dotnet user-secrets` locally, Azure Key Vault in production (via managed identity).
 - [ ] ADRs still to write: auth provider, worker→BFF messaging, API structure, data model.
@@ -59,6 +60,7 @@ Everything else is v2+.
 - [ ] Terraform `envs/prod`: resource group, Log Analytics, Container Apps environment, ACR, Key Vault, PostgreSQL Flexible Server, managed identities.
 - [ ] GitHub Actions (app): lint, test, build images, push to ACR, deploy new revision to Container Apps.
 - [ ] GitHub Actions (infra): fmt/validate/plan on PR (plan as PR comment), apply on merge with environment approval.
+- [ ] Switch `main` to PRs only, with required status checks (once CI and AI review exist).
 - [ ] AI review on every PR: Claude Code GitHub Action using the `code-reviewer` / `security-reviewer` agent prompts.
 - [ ] Generated TS client from OpenAPI wired into CI.
 

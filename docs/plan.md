@@ -49,7 +49,8 @@ Everything else is v2+.
 - [x] Hosting (ADR-0005: Azure), IaC (ADR-0006: Terraform), FX sources (ADR-0007) drafted.
 - [x] Secrets: `dotnet user-secrets` locally, Azure Key Vault in production (via managed identity).
 - [x] Backend code structure (ADR-0009: minimal APIs, vertical slices + domain libs, no mediator).
-- [ ] ADRs still to write: data model, auth provider, worker→BFF messaging.
+- [x] Data model foundations (ADR-0010: UUIDv7, strict Money, dates, raw data kept, single owner); ADR-0004 amended (Finverse first, cutoff for historical imports).
+- [ ] ADRs still to write: auth provider, worker→BFF messaging.
 
 ### Phase 1: Walking skeleton
 - [ ] React page → BFF → API → Postgres "hello" round trip.
@@ -58,7 +59,7 @@ Everything else is v2+.
 - [ ] Azure: free account, subscription, budget + cost alert.
 - [ ] Terraform bootstrap: remote state storage account (`infra/bootstrap`).
 - [ ] GitHub → Azure OIDC federated credentials (no client secrets).
-- [ ] Terraform `envs/prod`: resource group, Log Analytics, Container Apps environment, ACR, Key Vault, PostgreSQL Flexible Server, managed identities.
+- [ ] Terraform `envs/prod`: resource group, Log Analytics, Container Apps environment, ACR, Key Vault, PostgreSQL Flexible Server, Blob Storage (import files), managed identities.
 - [ ] GitHub Actions (app): lint, test, build images, push to ACR, deploy new revision to Container Apps.
 - [ ] GitHub Actions (infra): fmt/validate/plan on PR (plan as PR comment), apply on merge with environment approval.
 - [ ] Switch `main` to PRs only, with required status checks (once CI and AI review exist).
@@ -72,11 +73,12 @@ Everything else is v2+.
 - [ ] Audit log for imports, syncs and edits.
 
 ### Phase 3: Spending (v1 core)
-- [ ] Raw import tables + canonical transactions + source links (ADR-0004).
+- [ ] `Money`, `Currency` and clock (`TimeProvider`) in `Cocia.Domain` (ADR-0010).
+- [ ] Import batches (+ original files in Blob Storage), raw rows, canonical transactions (ADR-0004, ADR-0010).
 - [ ] Port CSV import POC into `libs/` behind a parser interface, with tests.
 - [ ] Port PdfPig POC the same way.
 - [ ] Finverse sync in the worker (port POC; refresh tokens; scheduled + manual sync).
-- [ ] Cross-source matching + review queue UI.
+- [ ] Cutoff rule for historical CSV/PDF imports (ADR-0004 amendment). Cross-source matching and review queue deferred.
 - [ ] Transactions list (filter, search, edit).
 - [ ] Rules-based categorisation, editable by the user.
 - [ ] Trends charts.

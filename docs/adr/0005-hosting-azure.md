@@ -16,6 +16,7 @@ Azure, region South Africa North (confirm every service is available there; fall
 - **Azure Container Apps** (Consumption plan) for `bff`, `api`, `worker` (and later the IBKR gateway), in one Container Apps environment. Only the BFF has public ingress; API and worker are internal.
 - **Azure Database for PostgreSQL – Flexible Server** (Burstable B1ms to start; free for 12 months on a free account).
 - **Azure Key Vault** for secrets (Finverse credentials, FX API key, encryption keys).
+- **Azure Blob Storage** (private container) for original imported CSV/PDF files (ADR-0010).
 - **Managed identities** for service-to-Azure access (Key Vault, registry, database where possible). No connection strings or keys in config.
 - **Azure Container Registry** (Basic) for images, pulled by managed identity. CI pushes images there.
 - **Log Analytics / Application Insights** for logs and OpenTelemetry data.

@@ -1,6 +1,6 @@
 # ADR 0004: Transaction import, matching and deduplication
 
-- Status: proposed
+- Status: accepted (amended 2026-11-25)
 - Date: 2026-11-21
 
 ## Context
@@ -24,3 +24,11 @@ Option 2:
 - Tables: `raw_import_rows`, `transactions` (canonical), `transaction_sources` (links).
 - Can re-run matching after improving the rules, because raw data is kept.
 - Thresholds (date window, similarity score) need tuning with synthetic edge-case data from `Cocia.TestData`.
+
+## Amendment (2026-11-25): Finverse first, historical imports by cutoff
+Finverse is the main source going forward; CSV and PDF are only used to import history from before Finverse's data starts. That removes most of the need for cross-source matching:
+- **Cutoff rule**: per account, CSV/PDF rows are imported only for dates **before** the earliest `posted_date` Finverse has for that account. Sources don't overlap, so there are no cross-source duplicates.
+- **One source row per canonical transaction**: `transactions.raw_row_id` (unique). The `transaction_sources` link table, cross-source matching (point 3), merging (point 4) and the review queue (point 5) are **deferred** until a real need appears (e.g. deliberately overlapping a few days to check the join).
+- Within-source dedup (point 2) and the raw layer (point 1) stand, detailed in ADR-0010: `source_key` per source, payload kept as text, original files in Blob Storage, `file_sha256` to reject re-uploading the same file.
+- CSV/PDF rows lack Finverse's richer fields (merchant, category…): those canonical columns are nullable; enrichment comes from category rules and description clean-up.
+- Import whole days only, so occurrence indexes stay stable across overlapping exports.

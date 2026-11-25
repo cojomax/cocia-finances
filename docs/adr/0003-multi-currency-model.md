@@ -12,7 +12,7 @@ USD is the primary currency, but accounts are also held in HKD, ZAR, EUR and GBP
 
 ## Decision
 Option 2.
-- Every amount is stored as **integer minor units + ISO 4217 code**, in its original currency. Never overwritten by a converted value.
+- Every amount is stored in its original currency with its ISO 4217 code, as `decimal` / `numeric(19,4)` via a strict `Money` type (ADR-0010). Never overwritten by a converted value.
 - `fx_rates` table: base, quote, rate (decimal), timestamp, source.
 - **USD is the reporting currency.** Conversion happens when reading or reporting.
   - Historical views (spending trends): rate on the transaction date (daily close).

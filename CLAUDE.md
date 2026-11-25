@@ -37,8 +37,10 @@ TBC. Once projects exist, list install / dev / lint / typecheck / test commands 
 4. Significant decisions get an ADR in `docs/adr/` (copy `0000-template.md`).
 
 ## Conventions (proposed: edit freely)
-- Money: never use floating point. Amounts stay in their original currency; USD is the reporting currency (ADR-0003). Store integer minor units (cents) plus an ISO 4217 currency code, or use a decimal library.
-- Dates: store UTC; convert to local time (Africa/Johannesburg default) only for display.
+- Money (ADR-0010): never floating point. C# `decimal`, Postgres `numeric(19,4)`, always via the strict `Money` type (no more decimals than the currency's ISO 4217 minor unit; round explicitly with `Money.Round`). Amounts stay in their original currency; USD is the reporting currency (ADR-0003). Convert and sum at full precision, round once at the end. Negative = money out of the account.
+- IDs: UUIDv7 (`Guid.CreateVersion7()`) for every table. Source IDs (e.g. Finverse's) are stored as `source_key` on raw rows, never used as keys.
+- Dates (ADR-0010): calendar dates (`posted_date`, `value_date`) are `DateOnly` / `date`; moments in time are `DateTimeOffset` / `timestamptz` in UTC. Never Postgres `timestamp` or `DateTime.Now`: inject `TimeProvider`. "Today" and month boundaries are computed in Africa/Johannesburg; convert to local time only for display.
+- Imports: always keep the raw source payload (text, unparsed) and original files; canonical transactions must be rebuildable from them.
 - Real financial data never goes into fixtures, tests, logs, screenshots or commits. Use synthetic data.
 - Secrets: `dotnet user-secrets` locally, Azure Key Vault in production (managed identity). Never hard-code keys or commit env files.
 - UI follows the design system in `docs/design-system/` (README = rules, `tokens.json` = source of truth, `tokens.css` generated from it). Read its README before building UI. Browsable copy: https://claude.ai/artifact/NSv7scAqkJAVuMrooXjRYf

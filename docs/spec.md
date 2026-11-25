@@ -8,6 +8,8 @@ Give me insight into my spending, investments and estate, and help me plan.
 ## Users
 - Primary: me (single user).
 - I am the manager of a household account.
+- Household: other household members' accounts appear in the app. Everything can be queried and filtered by person and
+by account; every account shows its owner.
 
 ## Core areas
 ### Spending
@@ -35,8 +37,10 @@ Give me insight into my spending, investments and estate, and help me plan.
 - TBC
 
 ## Constraints
-- Privacy first: data stays under my control. Hosted in my own Azure subscription (ADR-0005); sensitive fields encrypted with keys I hold in Key Vault.
-- Currency: USD primary, but multi-currency
+- Privacy first: data stays under my control. Hosted in my own Azure subscription (ADR-0005); sensitive fields encrypted
+with keys I hold in Key Vault.
+- Currency: USD primary, but multi-currency. Single items show their original currency; anything combined (totals,
+net worth, charts) shows USD. Numbers use US formatting for every currency.
 
 ## Open questions
 - TBC

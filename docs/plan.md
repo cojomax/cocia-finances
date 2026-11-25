@@ -17,7 +17,7 @@ Get one request flowing through every layer (React → BFF → API → Postgres)
 | `apps/bff` | ASP.NET Core (.NET 10) | Backend-for-Frontend: serves the React build, owns the cookie session, proxies to the API (YARP), hosts SignalR hub. See ADR-0002. |
 | `apps/api` | ASP.NET Core (.NET 10) | Domain API. EF Core + PostgreSQL. Publishes an OpenAPI spec. |
 | `apps/worker` | .NET Worker Service | Finverse syncs + token refresh, FX rate polling, scheduled jobs. |
-| `libs/*` | .NET class libraries | Import parsers (CSV, PDF), domain logic, planning maths, `Cocia.TestData`. |
+| `libs/*` | .NET class libraries | `Cocia.Domain` (pure logic), `Cocia.Imports`, `Cocia.Finverse`, `Cocia.Data` (EF Core), `Cocia.TestData`. See ADR-0009. |
 | Postgres | PostgreSQL | Primary store. Azure Database for PostgreSQL Flexible Server in the cloud; container locally. |
 | (later) IBKR gateway | Java process | Its own container. |
 
@@ -48,7 +48,8 @@ Everything else is v2+.
 - [x] Extend `.claude/hooks/check.sh` for .NET (`dotnet build`, `dotnet format`) and Terraform (`fmt`, `validate`).
 - [x] Hosting (ADR-0005: Azure), IaC (ADR-0006: Terraform), FX sources (ADR-0007) drafted.
 - [x] Secrets: `dotnet user-secrets` locally, Azure Key Vault in production (via managed identity).
-- [ ] ADRs still to write: auth provider, worker→BFF messaging, API structure, data model.
+- [x] Backend code structure (ADR-0009: minimal APIs, vertical slices + domain libs, no mediator).
+- [ ] ADRs still to write: data model, auth provider, worker→BFF messaging.
 
 ### Phase 1: Walking skeleton
 - [ ] React page → BFF → API → Postgres "hello" round trip.

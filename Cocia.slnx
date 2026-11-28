@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/apps/">
+    <Project Path="apps/api/Cocia.Api/Cocia.Api.csproj" />
+    <Project Path="apps/bff/Cocia.Bff/Cocia.Bff.csproj" />
+    <Project Path="apps/worker/Cocia.Worker/Cocia.Worker.csproj" />
+  </Folder>
+  <Folder Name="/libs/">
+    <Project Path="libs/Cocia.Data/Cocia.Data.csproj" />
+    <Project Path="libs/Cocia.Domain/Cocia.Domain.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Cocia.Api.Tests/Cocia.Api.Tests.csproj" />
+    <Project Path="tests/Cocia.Domain.Tests/Cocia.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

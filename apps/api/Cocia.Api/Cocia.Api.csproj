@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libs\Cocia.Domain\Cocia.Domain.csproj" />
+    <ProjectReference Include="..\..\..\libs\Cocia.Data\Cocia.Data.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    
+  </PropertyGroup>
+
+</Project>
